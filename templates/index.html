@@ -1,9 +1,23 @@
 {% extends "base.html" %}
 
-{% block title %}
-    Index
-{% endblock title %}
+{% block titulo %}
+    Inicio - El Blog Café
+{% endblock titulo %}
 
 {% block body %}
-    <h1>Este es el Blog Café renderizando una plantilla</h1>
+    <h1 class="my-5">Este es el Blog Café renderizando una plantilla</h1>
+
+    
+        {% for post in posts %}
+        <div class="card" style="width: 18rem;">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{ post.titulo }}</h5>
+                <p class="card-text">{{ post.contenido }}</p>
+                <p class="card-text">Escrito por {{ post.autor }} el {{ post.fecha }}</p>
+                <a href="#" class="btn btn-primary">Leer artículo completo</a>
+            </div>
+        </div>
+        {% endfor %}
+    <a href="/post">Post</a>
 {% endblock body %}
