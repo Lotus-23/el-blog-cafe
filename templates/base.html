@@ -17,11 +17,18 @@
 
     <!-- Iconos Font Awesome -->
     <script src="https://kit.fontawesome.com/b3d4652f01.js" crossorigin="anonymous"></script>
-    <title>{% block titulo %}{% endblock titulo %}</title>
+    <title>
+        {% if titulo %} 
+            El Blog Café - {{titulo}} 
+            {% else %}
+            El Blog Café
+            {% endif %}</title>
 </head>
 <body>
     {% include 'includes/nav.html' %}
-    {% block body %}{% endblock body %}
+    
+    {% block contenido %}
+    {% endblock contenido %}
 
     {% include 'includes/footer.html' %}
 
