@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, flash, redirect
 from forms import FormularioRegistro, FormularioLogin
 app = Flask(__name__)
 
@@ -32,11 +32,22 @@ def post():
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
     form = FormularioRegistro()
+    if form.validate_on_submit():
+        flash(f'Registro satisfactorio para el usuario { form.usuario.data }!', 'success')
+        return redirect(url_for('blog'))
+
     return render_template('registro.html', titulo='Registro', form=form)      
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     form = FormularioLogin()
+    if form.validate_on_submit():
+        if form.correo.data == 'admin@blog.com' and form.password.data == 'password':
+            flash(f'Ingresaste al Blog Café !', 'success')
+            return redirect(url_for('blog'))
+        else:
+            flash(f'El ingreso falló, por favor revise su nombre de usuario y contraseña', 'danger')
+
     return render_template('login.html', titulo='Log In', form=form)      
 
 if __name__ == '__main__':

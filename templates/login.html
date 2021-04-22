@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+    <h1 class="my-5">Login</h1>
+
+    <div class="content-section mx-5">
+        <form action="" method="POST">
+            <!-- CSRF Token -->
+            {{ form.hidden_tag() }} 
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Registrate hoy!</legend>
+
+                <div class="form-group">
+                    {{ form.correo.label(class="form-control-label") }}
+
+                    {% if form.correo.errors %}
+                        {{ form.correo(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.correo.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>    
+                    {% else %}
+                        {{ form.correo(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.password.label(class="form-control-label") }}
+                    {% if form.password.errors %}
+                        {{ form.password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>    
+                    {% else %}
+                        {{ form.password(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-check">
+                    {{ form.recuerdame(class="form-check-input") }}
+                    {{ form.recuerdame.label(class="form-check-label") }}
+                </div>
+            </fieldset>
+            <div class="form-group mb-3">
+                {{ form.enviar(class="bt btn-outline-info") }}
+            </div>
+            <small class="text-muted mb-3">
+                <a href="#">Olvidaste tu contraseña?</a>
+            </small>
+        </form>
+    </div>
+    <div class="border-top mt-3">
+        <small class="text-muted">
+            No tienes una cuenta? <a class="me-2" href="{{ url_for('registro') }}">Crea tu cuenta ahora</a>
+        </small>
+    </div>
+{% endblock contenido %}

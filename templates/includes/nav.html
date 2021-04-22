@@ -32,10 +32,10 @@
           </li>
           {% else %}
           <li class="nav-item ms-5">
-            <a class="nav-link active" aria-current="page" href="#"><i class="fas fa-sign-in-alt"></i> Ingresar</a>
+            <a class="nav-link active" aria-current="page" href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Ingresar</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#"><i class="fas fa-rss"></i> Registrarse</a>
+            <a class="nav-link active" aria-current="page" href="{{ url_for('registro') }}"><i class="fas fa-rss"></i> Registrarse</a>
           </li>
           {% endif %}
         </ul>

@@ -3,7 +3,7 @@
 {% block contenido %}
     <h1 class="my-5">Formulario de Registro</h1>
 
-    <div class="content-section">
+    <div class="content-section mx-5">
         <form action="" method="POST">
             <!-- CSRF Token -->
             {{ form.hidden_tag() }} 
@@ -11,22 +11,60 @@
                 <legend class="border-bottom mb-4">Registrate hoy!</legend>
                 <div class="form-group">
                     {{ form.usuario.label(class="form-control-label") }}
-                    {{ form.usuario(class="form-control form-control-lg") }}
+
+                    {% if form.usuario.errors %}
+                        {{ form.usuario(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.usuario.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>    
+                    {% else %}
+                        {{ form.usuario(class="form-control form-control-lg") }}
+                    {% endif %}
                 </div>
-                <!-- <div class="form-group">
+                <div class="form-group">
                     {{ form.correo.label(class="form-control-label") }}
-                    {{ form.correo(class="form-control form-control-lg") }}
-                </div> -->
+
+                    {% if form.correo.errors %}
+                        {{ form.correo(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.correo.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>    
+                    {% else %}
+                        {{ form.correo(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
                 <div class="form-group">
                     {{ form.password.label(class="form-control-label") }}
-                    {{ form.password(class="form-control form-control-lg") }}
+                    {% if form.password.errors %}
+                        {{ form.password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>    
+                    {% else %}
+                        {{ form.password(class="form-control form-control-lg") }}
+                    {% endif %}
                 </div>
                 <div class="form-group">
                     {{ form.confirma_password.label(class="form-control-label") }}
-                    {{ form.confirma_password(class="form-control form-control-lg") }}
+                    {% if form.confirma_password.errors %}
+                        {{ form.confirma_password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.confirma_password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>    
+                    {% else %}
+                        {{ form.confirma_password(class="form-control form-control-lg") }}
+                    {% endif %}
                 </div>
             </fieldset>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 {{ form.enviar(class="bt btn-outline-info") }}
             </div>
         </form>
