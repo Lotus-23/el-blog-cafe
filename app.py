@@ -23,7 +23,7 @@ posts = [
 
 @app.route('/')
 def blog():
-    return render_template('index.html', titulo='Inicio', posts=posts, isUser=False)
+    return render_template('index.html', titulo='Inicio', posts=posts, isUser=isUser)
 
 @app.route('/post')
 def post():
@@ -44,6 +44,7 @@ def login():
     if form.validate_on_submit():
         if form.correo.data == 'admin@blog.com' and form.password.data == 'password':
             flash(f'Ingresaste al Blog Café !', 'success')
+            isUser = True
             return redirect(url_for('blog'))
         else:
             flash(f'El ingreso falló, por favor revise su nombre de usuario y contraseña', 'danger')
