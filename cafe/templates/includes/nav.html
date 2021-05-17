@@ -18,16 +18,17 @@
                 <button class="btn btn-outline-success" type="submit">Buscar</button>
               </form>
           </li>
-          {% if isUser %}
+          {% if current_user.is_authenticated %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-user-circle"></i> Perfil
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{{ url_for('perfil') }}"><i class="fas fa-user-circle"></i>Ver perfil</a></li>
               <li><a class="dropdown-item" href="#"><i class="fas fa-cogs"></i> Preferencias</a></li>
               <li><a class="dropdown-item" href="#"><i class="far fa-file-alt"></i> Mis artículos</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a></li>
+              <li><a class="dropdown-item" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a></li>
             </ul>
           </li>
           {% else %}

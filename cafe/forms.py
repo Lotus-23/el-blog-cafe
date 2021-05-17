@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import DataRequired, Length, EqualTo, Email, InputRequired
+from wtforms.validators import DataRequired, Email, EqualTo, InputRequired, Length, ValidationError
 from wtforms.fields.html5 import EmailField
+from cafe.models import Usuario
 
 class FormularioRegistro(FlaskForm):
 
@@ -11,6 +12,18 @@ class FormularioRegistro(FlaskForm):
     confirma_password = PasswordField('Confirme su Contraseña', validators=[InputRequired("Por favor vuelva a ingresasr su contraseña"), EqualTo('password')])
 
     enviar = SubmitField('Regístrate!')
+
+    def validate_usuario(self, usuario):
+        
+        user = Usuario.query.filter_by(usuario=usuario.data).first()
+        if user:
+            raise ValidationError('Este nombre de usuario ya está en uso, por favor ingrese uno diferente')
+
+    def validate_correo(self, correo):
+        
+        user = Usuario.query.filter_by(correo=correo.data).first()
+        if user:
+            raise ValidationError('Este correo electrónico ya está en uso, por favor ingrese uno diferente')
 
 
 class FormularioLogin(FlaskForm):
