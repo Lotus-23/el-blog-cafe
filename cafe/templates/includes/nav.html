@@ -21,7 +21,7 @@
           {% if current_user.is_authenticated %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fas fa-user-circle"></i> Perfil
+                <i class="fas fa-user-circle"></i> {{ current_user.usuario}}
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="{{ url_for('perfil') }}"><i class="fas fa-user-circle"></i>Ver perfil</a></li>

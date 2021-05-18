@@ -1,6 +1,9 @@
+import os 
+import secrets
+from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
 from cafe import app, db, bcrypt
-from cafe.forms import FormularioRegistro, FormularioLogin
+from cafe.forms import FormularioRegistro, FormularioLogin, DataUpdateForm
 from cafe.models import Usuario, Post
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -65,7 +68,34 @@ def logout():
     logout_user()
     return redirect(url_for('blog'))
 
-@app.route('/perfil')
+def guardar_img(form_img):
+    random_hex = secrets.token_hex(16)
+    _, f_ext = os.path.splitext(form_img.filename)
+    img_fn = random_hex + f_ext
+    path_img = os.path.join(app.root_path, 'static/user_img', img_fn)
+    size = (125, 125)
+    i = Image.open(form_img)
+    i.thumbnail(size)
+    i.save(path_img)
+
+    return img_fn
+
+@app.route('/perfil', methods=['GET', 'POST'])
 @login_required
 def perfil():
-    return render_template('perfil.html', titulo='Perfil')
+    form = DataUpdateForm()
+    if form.validate_on_submit():
+        if form.imagen.data:
+            img_file = guardar_img(form.imagen.data)
+            current_user.avatar = img_file
+        current_user.usuario = form.usuario.data
+        current_user.correo = form.correo.data
+        db.session.commit()
+        flash('Su cuenta ha sido actualizada!', 'success')
+        return redirect(url_for('perfil'))
+    elif request.method == 'GET':
+        form.usuario.data = current_user.usuario
+        form.correo.data = current_user.correo
+
+    avatar = url_for('static', filename='user_img/'+current_user.avatar)
+    return render_template('perfil.html', titulo='Perfil', avatar=avatar, form=form)
